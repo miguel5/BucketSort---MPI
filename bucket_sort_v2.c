@@ -25,7 +25,7 @@ void qsort_dbls(double *array, int array_len){
 int find_bucket(double num, int p_num){
   int x;
   for(x=1; x < p_num+1; x++){
-	double bucket_range =(double) x / (double)p_num;
+	double bucket_range = (double) x / (double) p_num;
 	if(num <= bucket_range){
 	  return x - 1; //return bucket number
 	}
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 	}
 
 	//Allocate Arrays	
-	int N = strtol(argv[1], NULL, 10);
+	int N = atoi(argv[1]);
 	int *count = (int*)malloc(P*sizeof(int));
 	double *list = (double*)malloc(N*sizeof(double));
 	int *displs = (int*)malloc(P*sizeof(int));
