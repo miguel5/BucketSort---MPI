@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 	MPI_Comm_size(MPI_COMM_WORLD, &P);
 	MPI_Comm_rank(MPI_COMM_WORLD, &myrank);	
 
-	//double t1 = MPI_Wtime();
+	double t1 = MPI_Wtime();
 
 	//Root
 	if(myrank == 0){
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 		//}
 	}
 
-	//double t2 = MPI_Wtime();
+	double t2 = MPI_Wtime();
 
 	//Scatter Bucket Counts
 	MPI_Scatter(count, 1, MPI_INT, sub_count, 1, MPI_INT, 0, MPI_COMM_WORLD );
@@ -112,12 +112,12 @@ int main(int argc, char *argv[]){
 		free(index);
 	}
 
-	//double t3 = MPI_Wtime();
+	double t3 = MPI_Wtime();
 
 	//Scatter Bucket-sorted list using scatterv
 	MPI_Scatterv(dist_list, count, displs, MPI_DOUBLE, bucket_list, sub_count[0], MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	//double t4 = MPI_Wtime();
+	double t4 = MPI_Wtime();
 
 	//Do Quicksort on each list locally
 	qsort_dbls(bucket_list, sub_count[0]);
@@ -150,12 +150,13 @@ int main(int argc, char *argv[]){
 		free(displs);
 		free(count);
 		free(dist_list);
-	//printf("\nTime to Generate: %f\n", t2-t1);
-	//printf("\nTime to Bin: %f\n", t3-t2);
-	//printf("\nTime to Distribute: %f\n", t4-t3);
-	//printf("\nTime to Sort: %f\n", t5-t4);
+		
+	printf("\nTime to Generate: %f\n", t2-t1);
+	printf("\nTime to Bin: %f\n", t3-t2);
+	printf("\nTime to Distribute: %f\n", t4-t3);
+	printf("\nTime to Sort: %f\n", t5-t4);
 	printf("\nTime to Gather: %f\n", t6-t5);
-	//printf("\nTotal Execution Time: %f\n", t6-t1);
+	printf("\nTotal Execution Time: %f\n", t6-t1);
 
 	}
 
